@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { StyleSheet, css } from 'aphrodite';
 
 class Quote extends Component{
     constructor(props){
@@ -6,10 +7,19 @@ class Quote extends Component{
         this.state={
             quotes:{
                 name:"",
-                quote:""
+                quote:"",
+                color:""
             }
         }
         this.generateQuote = this.generateQuote.bind(this);
+    }
+
+    componentDidMount(){
+        this.setState({
+            quote: "Design is not just what it looks like and feels like. Design is how it works.",
+            name: "Steve Jobs",
+            color: "palevioletred"
+        })
     }
     generateQuote(){
         var quotes = [{
@@ -41,33 +51,71 @@ class Quote extends Component{
             "quote": "Whether you think you can or you think you can’t, you’re right."
           }];
         
-
+        var colors=["palevioletred", "#fe4a49", "#2ab7ca", "#fed766", "#851e3e", "#f4b6c2", "#03396c", "#005b96",  "#6497b1"]
         var quoteId = Math.floor(Math.random()*(quotes.length));
+
         this.setState({
            quote : quotes[quoteId].quote,
-           name : quotes[quoteId].attrib
+           name : quotes[quoteId].attrib,
+           color: colors[quoteId]
         }) 
     }
 
     render(){
-       
+
+        const styling = {
+            buttonStyle: {
+                background: this.state.color,
+                width: '20vw',
+                color: '#fff',
+                borderRadius: '3px',
+                border: 0,
+                marginLeft: '20vw'
+            },
+            containerStyle:{
+                margin: 0,
+                padding: 0,
+                border: 0,
+                width: '100vw',
+                height: '100vh',
+                backgroundColor: this.state.color,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            },
+            boxStyle:{
+                backgroundColor: '#fff',
+                borderRadius: '3px',
+                width: '60vw',
+                padding: '10vw',
+            }
+            
+        }
+       const { buttonStyle, containerStyle, boxStyle } = styling;
         return(
-            <div>
-                <div className="container">
-                    <div className="quote">
-                        <h1>{this.state.quote}</h1>
+            <div style={containerStyle}>
+                <div style={boxStyle}>
+                    <div >
+                        <h1 style={{color: this.state.color}}>{this.state.quote}</h1>
                     </div>
                     <div className="name">
-                        <p>{this.state.name}</p>
+                        <p style={{color: this.state.color}}>{this.state.name}</p>
                     </div>
                     <div className="tweet">
                     
-                    <button onClick={this.generateQuote}>New quote</button>
+                        <button style={buttonStyle} onClick={this.generateQuote}>New quote</button>
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    box:{
+        
+    },
+
+})
 
 export default Quote;
